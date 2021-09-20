@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import './App.css';
+
 import Input from "./components/Input";
 import axios from "axios";
 import Result from "./components/Result";
@@ -21,6 +21,7 @@ function App() {
     "&units=" +
     unit;
  const response = await axios.get(url);
+ console.log(response)
  const temp= await response.data.main.temp;
  const weatherDescription= await response.data.weather[0].description;
  const icon= await response.data.weather[0].icon;
@@ -29,10 +30,14 @@ function App() {
  setDescription(weatherDescription);
  setIcon(imageURL);
   };
-  return (
+  return ( 
     <div className="app">
+      {temp === "" ? (
       <Input input={input} setInput={setInput} findWeather={findWeather}/>
-      <Result temp={temp} desc={description} icon={icon} />
+      ):
+      (<Result temp={temp} desc={description} icon={icon} setTemp={setTemp} />
+      )
+      }
     </div>
   );
 }
